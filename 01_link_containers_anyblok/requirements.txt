@@ -1,0 +1,2 @@
+anyblok_pyramid
+psycopg2
