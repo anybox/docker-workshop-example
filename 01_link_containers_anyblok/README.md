@@ -10,7 +10,7 @@ http://docs.anybox.fr/anyblok/default/) to manage todo list on server side
 
 ```bash
 $ docker run -d --name pganyblok \
-    -e POSTGRES_PASSWORD=pgpass postgres \
+    -e POSTGRES_PASSWORD=pgpass \
     -e POSTGRES_USER=pguser \
     postgres
 ```
