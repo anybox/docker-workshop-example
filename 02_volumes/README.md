@@ -24,6 +24,10 @@ $ docker inspect hello
 $ sudo cat /var/lib/docker/vfs/dir/7f...dea/counter.txt
 ```
 
+> **Note** If the ``VOLUME`` command is not declared in the docker file you
+> can add param at runtime in the ``docker create`` or ``docker run`` command 
+> using ``-v /data`` this will give the same result
+
 ## Build and run counter application
 
 ```bash
@@ -48,6 +52,8 @@ $ docker run
     02_3_backup -d /backup/counter.back
 ```
 
+> **TODO** For a simple case as this one I should test ``docker cp``
+
 
 ## Bonus: Build and run fake hello application
 
@@ -56,5 +62,5 @@ $ docker run
 $ docker build -t 02_4_fake_hello -f 4_fake_hello/Dockerfile 4_fake_hello/
 $ docker run -d -e WAIT=5 -e INCREMENT=5 --volumes-from hello 02_4_fake_hello
 $ docker run -d -e WAIT=3 -e INCREMENT=10 --volumes-from hello 02_4_fake_hello
-...
+$ ...
 ```
