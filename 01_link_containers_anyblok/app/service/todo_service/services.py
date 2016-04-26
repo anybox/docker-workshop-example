@@ -1,6 +1,10 @@
 from pyramid.view import view_config
 from anyblok_pyramid import current_blok
 
+# TODO: return proper HTML responses:
+# http://www.js-attitude.fr/2013/06/05/
+# meilleures-pratiques-pour-vos-urls-verbes-http-et-apis/
+
 
 @view_config(
     route_name='todo-list',
