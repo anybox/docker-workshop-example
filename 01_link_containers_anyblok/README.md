@@ -1,9 +1,9 @@
 # Link container
 
-This example intent to demonstrate how to link 2 docker containers.
+This example intents to demonstrate how to link 2 docker containers.
 A DBMS Docker container using [PostgreSQL image](
-https://hub.docker.com/_/postgres/ "Postgres on docker hub") and an home made
-container wich is a todo REST API that use http verbes based on [Anyblok](
+https://hub.docker.com/_/postgres/ "Postgres on docker hub") and an homemade
+container which is a todo REST API that uses http verbes based on [Anyblok](
 http://docs.anybox.fr/anyblok/default/) to manage todo list on server side
 
 ## Start postgresql Docker container
