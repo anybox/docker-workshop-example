@@ -26,7 +26,7 @@ $ docker build -t 01_todo_service .
 
 ```bash
 $ docker run --rm -it --link pganyblok:database 01_todo_service \
-        anyblok_createdb --install-bloks todo todo_service -c anyblok.cfg
+        anyblok_createdb --install-bloks todo_service -c anyblok.cfg
 ```
 
 ## Start the server

@@ -1,3 +1,7 @@
+[![Build Status](https://travis-ci.org/anybox/
+docker-workshop-example.svg?branch=master)](
+https://travis-ci.org/anybox/docker-workshop-example)
+
 # Docker workshop examples
 
 This repo give some examples used while [docker workshop](

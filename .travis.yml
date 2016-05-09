@@ -1,0 +1,38 @@
+sudo: required
+
+services:
+  - docker
+
+install: true
+
+before_script:
+  - docker build -f 00_port_binding_pyramid/Dockerfile -t 00_pyramid 00_port_binding_pyramid/
+  - docker run -d -p 9080:8080 --name docker_00 00_pyramid
+  - docker run -d --name pganyblok -e POSTGRES_PASSWORD=pgpass -e POSTGRES_USER=pguser postgres
+  - docker build -f 01_link_containers_anyblok/Dockerfile -t 01_anyblok 01_link_containers_anyblok/
+  - docker run --rm -it --link pganyblok:database 01_anyblok anyblok_createdb --install-bloks todo_service -c anyblok.cfg
+  - docker run -d -p 9081:8080 --link pganyblok:database --name docker_01 01_anyblok
+  - docker build -f 02_volumes/1_hello/Dockerfile -t 02_1_hello 02_volumes/1_hello/
+  - docker build -f 02_volumes/2_counter/Dockerfile -t 02_2_counter 02_volumes/2_counter/
+  - docker build -f 02_volumes/3_backup/Dockerfile -t 02_3_backup 02_volumes/3_backup/
+  - docker build -f 02_volumes/4_fake_hello/Dockerfile -t 02_4_fake_hello  02_volumes/4_fake_hello/
+  - docker run -d -p 9082:8080 --name docker_02 02_1_hello
+  - docker run -d --volumes-from docker_02 --name docker_03 02_2_counter
+  - docker run -d -e WAIT=1 -e INCREMENT=15 --volumes-from docker_02 --name docker_04 02_4_fake_hello
+
+script:
+  - docker ps | grep -q docker_00
+  - curl "localhost:9080/hello/travis"
+  - docker ps | grep -q pganyblok
+  - docker ps | grep -q docker_01
+  - curl "localhost:9081/todo/2"
+  - curl -X PATCH  -H "Content-Type: application/json"  -d '{"task": "Fix task label and change state", "done": true}' "localhost:9081/todo/2"
+  - curl -X PUT -H "Content-Type: application/json" -d '{"task": "An other thing todo"}' "localhost:9081/todo"
+  - curl "localhost:9081/todo"
+  - curl -X DELETE "localhost:9081/todo/2"
+  - docker ps | grep -q docker_02
+  - docker ps | grep -q docker_03
+  - docker ps | grep -q docker_04
+  - curl "localhost:9082/hello/travis"
+  - mkdir test && docker run --rm -it --volumes-from docker_02 -v $(pwd)/test/:/backup/ -e COUNTER_PATH=/data/counter.txt 02_3_backup -d /backup/counter.back
+  - cat test/counter.back
