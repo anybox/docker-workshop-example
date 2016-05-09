@@ -5,6 +5,10 @@ class TodoServiceBlok(Blok):
 
     version = '1.0.0'
 
+    required = [
+        'todo',
+    ]
+
     @classmethod
     def pyramid_load_config(cls, config):
         config.add_route('todo-list', '/todo', request_method='GET')
