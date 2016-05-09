@@ -15,7 +15,7 @@ setup(
     description='Services',
     author='Pierre Verkest',
     author_email='pverkest@anybox.fr',
-    url='https://github.com/petrus-v/docker-workshop-example',
+    url='https://github.com/anybox/docker-workshop-example',
     packages=[
         'todo_service',
     ],
