@@ -28,8 +28,8 @@ script:
   - docker ps | grep -q pganyblok
   - docker ps | grep -q docker_01
   - curl "localhost:9081/todo/2"
-  - "curl -X PUT -H 'Content-Type: application/json' -d {\"task\": \"An other thing todo\"} localhost:9081/todo"
-  - "curl -X PATCH  -H 'Content-Type: application/json'  -d {\"task\": \"Fix task label and change state\", \"done\": true} localhost:9081/todo/2"
+  - "curl -X PUT -H 'Content-Type: application/json' -d '{\"task\": \"An other thing todo\"}' localhost:9081/todo"
+  - "curl -X PATCH  -H 'Content-Type: application/json'  -d '{\"task\": \"Fix task label and change state\", \"done\": true}' localhost:9081/todo/2"
   - curl "localhost:9081/todo"
   - curl -X DELETE "localhost:9081/todo/2"
   - docker ps | grep -q docker_02
