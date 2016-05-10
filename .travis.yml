@@ -28,13 +28,13 @@ script:
   - docker ps | grep -q pganyblok
   - docker ps | grep -q docker_01
   - curl "localhost:9081/todo/2"
-#  - curl -X PATCH  -H "Content-Type: application/json"  -d "{\"task\": \"Fix task label and change state\", \"done\": true}" "localhost:9081/todo/2"
-#  - curl -X PUT -H "Content-Type: application/json" -d "{\"task\": \"An other thing todo\"}" "localhost:9081/todo"
+  - "curl -X PUT -H 'Content-Type: application/json' -d {\"task\": \"An other thing todo\"} localhost:9081/todo"
+  - "curl -X PATCH  -H 'Content-Type: application/json'  -d {\"task\": \"Fix task label and change state\", \"done\": true} localhost:9081/todo/2"
   - curl "localhost:9081/todo"
   - curl -X DELETE "localhost:9081/todo/2"
   - docker ps | grep -q docker_02
   - docker ps | grep -q docker_03
   - docker ps | grep -q docker_04
   - curl "localhost:9082/hello/travis"
-  - mkdir test && docker run --rm -it --volumes-from docker_02 -v $(pwd)/test/:/backup/ -e COUNTER_PATH=/data/counter.txt 02_3_backup -d /backup/counter.back
+  - sleep 10 && mkdir test && docker run --rm -it --volumes-from docker_02 -v $(pwd)/test/:/backup/ -e COUNTER_PATH=/data/counter.txt 02_3_backup -d /backup/counter.back
   - cat test/counter.back
